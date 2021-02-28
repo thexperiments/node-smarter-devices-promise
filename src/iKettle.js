@@ -83,5 +83,13 @@ iKettle.prototype.getWaterlevelOffset = function() {
   return this.smarterClient.sendCommand(commands.iKettle.getWaterlevelOffset());
 };
 
+iKettle.prototype.getInfo = function() {
+  return this.smarterClient.sendCommand(commands.iKettle.getInfo()).then(function(){
+      return new Promise (function (resolve, reject){
+        _this.on("statusMessage", resolve)
+      });
+    });;
+};
+
 
 module.exports = iKettle;

@@ -21,12 +21,15 @@ myKettle.connect().then(function(){
     case 'startHeatingCustom':
       return myKettle.startHeatingCustom(temperature,keepWarmTime);
       break;
+    case 'status':
+      return myKettle.getInfo();
+      break;
     default:
       return Promise.reject("unknown command");
       break;
   }
 })
-.delay(100)
+.delay(1000)
 .finally(function(){
   myKettle.disconnect();
   process.exit(0);

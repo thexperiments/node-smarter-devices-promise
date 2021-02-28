@@ -103,9 +103,13 @@ SmarterClient.prototype._sendMessage = function(message){
   //this will also reconnect if connection was lost
   return this.connect().then(function(){
     //send the message
-    return new Promise (function (_resolve, _reject){
+    return new Promise (function (resolve, reject){
       _this.socket.write(messageBuffer.toString("ascii"), function(){
-        _resolve();
+      resolve()
+      });
+    }).then(function(){
+      return new Promise (function (resolve, reject){
+        _this.on("messageReceived", resolve)
       });
     });
   });

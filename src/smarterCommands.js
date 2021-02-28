@@ -39,6 +39,11 @@ iKettleCommands.prototype.getWaterlevelOffset = function() {
   return [0x2b];
 };
 
+iKettleCommands.prototype.getInfo = function() {
+  // get the offset for the watersensor
+  return [0x16];
+};
+
 //
 // Commands for smarter coffee
 //
