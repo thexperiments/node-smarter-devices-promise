@@ -1,0 +1,41 @@
+{
+  "name": "smarter-devices",
+  "version": "0.0.1",
+  "description": "A node module to control smarter devices (http://smarter.am) like iKettle 2.0 and smarter coffee SMC10",
+  "author": {
+    "name": "Lukas Reinhart",
+    "url": "https://github.com/thexperiments/node-smarter-devices-promise"
+  },
+  "license": "MIT",
+  "main": "src/index",
+  "files": [
+    "examples",
+    "src",
+    "LICENSE",
+    "HISTORY.md",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "./node_modules/.bin/gulp"
+  },
+  "homepage": "https://github.com/thexperiments/node-smarter-devices-promise",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thexperiments/node-smarter-devices-promise"
+  },
+  "bugs": {
+    "url": "https://github.com/thexperiments/node-smarter-devices-promise/issues"
+  },
+  "keywords": [
+    "SmartHome",
+    "coffee",
+    "smarter",
+    "smarter.am",
+    "iKettle",
+    "SMC10"
+  ],
+  "dependencies": {
+    "bluebird": "^3.5.0"
+  },
+  "devDependencies": {}
+}
