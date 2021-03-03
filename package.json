@@ -1,6 +1,6 @@
 {
   "name": "smarter-devices-promise",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A node module to control smarter devices (http://smarter.am) like iKettle 2.0 and smarter coffee SMC10",
   "author": {
     "name": "Lukas Reinhart",
