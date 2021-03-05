@@ -112,7 +112,7 @@ SmarterClient.prototype._sendMessage = function(message){
     }).then(function(){
       return new Promise (function (resolve, reject){
         _this.on("messageReceived", resolve)
-      }).timeout(5).catch(Promise.TimeoutError, function(e) {
+      }).timeout(1000).catch(Promise.TimeoutError, function(e) {
         console.log("Did not receive response within 1s, trying to reconnect...");
         _this.disconnect();
       });
