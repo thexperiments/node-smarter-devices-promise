@@ -16,10 +16,12 @@ var iKettle = function(host){
   this.waterlevelCalibratedOffset = 0; //currently not used doesn't look correct, was 2390 for me
   this.waterlevelOffsetEmpty = 2100; //default from my kettle, handle on the right
   this.waterlevelOffset1L = 2175; //default from my kettle filled with 1L water, handle on the right
-  _this = this;
+  this.aliveTimeoutTimer = {}
+  var _this = this;
 
   //event forwarding
   this.smarterClient.on('connected', function(){
+    console.log(_this);
     _this.emit('connected');
   });
   this.smarterClient.on('messageReceived', function(messageType, messagePayload){
@@ -34,6 +36,14 @@ var iKettle = function(host){
         var unitDelta = _this.status.waterlevel - _this.waterlevelOffsetEmpty;
         _this.status.waterlevelLiters = Math.round((unitDelta * litersPerUnit) * 10)/10.0;
         _this.emit('statusMessage', _this.status);
+        //expect a status message at least every 5 seconds
+        //reset timout on every sucesfully arrived status message
+        clearTimeout(_this.aliveTimeoutTimer);
+        //and set up a new one
+        _this.aliveTimeoutTimer = setTimeout(function(){
+          //reset the connection of no status was received for 5s
+          _this.smarterClient.disconnect();
+        }, 5000);
         break;
       case responses.iKettle.waterlevelOffset:
         _this.waterlevelCalibratedOffset = responses.iKettle.waterlevelOffset_decode(messagePayload);

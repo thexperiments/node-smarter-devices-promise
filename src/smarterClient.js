@@ -25,7 +25,7 @@ var SmarterClient = function(ip, port){
 
   this.connectionRetries = 0;
 
-  _this = this;
+  var _this = this;
 
   //clean disconnection
   process.on('exit', function(){_this.disconnect();})
@@ -62,8 +62,10 @@ SmarterClient.prototype.connect = function(){
 }
 
 SmarterClient.prototype.disconnect = function(){
+  helper.debug("Disconnecting...");
   var _this = this;
   _this.socket.end();
+  _this.socket.destroy();
 }
 
 SmarterClient.prototype._handleData = function(data){
@@ -86,12 +88,12 @@ SmarterClient.prototype._handleClose = function(){
   helper.debug("Connection to " + this.ip + ":" + this.port + " closed");
   this.emit('disconnected');
   this.isConnected = false;
-  _this = this;
+  var _this = this;
   if (this.connectionRetries <= CON_RETRIES){
     setTimeout(function(){
       _this.connectionRetries += 1;
       _this.connect();
-    }, 10000);
+    }, 5000);
   }
 }
 
@@ -110,6 +112,9 @@ SmarterClient.prototype._sendMessage = function(message){
     }).then(function(){
       return new Promise (function (resolve, reject){
         _this.on("messageReceived", resolve)
+      }).timeout(5).catch(Promise.TimeoutError, function(e) {
+        console.log("Did not receive response within 1s, trying to reconnect...");
+        _this.disconnect();
       });
     });
   });
